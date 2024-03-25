@@ -56,10 +56,10 @@ with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 
 
-
+st.image("../Images/Banner1.png")
 # Display the chat interface
-st.markdown("### KnessChat")
-st.markdown("---")
+#st.markdown("### KnessChat")
+#st.markdown("---")
 
 # Display the messages
 for tweet in all_tweets["Tweets"]:
