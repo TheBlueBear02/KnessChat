@@ -56,7 +56,7 @@ with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 
 
-st.image("https://github.com/TheBlueBear02/KnessChat/blob/master/Images/banner1.png")
+st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png")
 # Display the chat interface
 #st.markdown("### KnessChat")
 #st.markdown("---")
