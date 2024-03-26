@@ -54,16 +54,7 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 
-welcomeT = f"""
-    <div dir= "rtl" style="display: flex; flex-direction: column; align-items: right; margin-top: 4px;">
-    <h4>על מה חברי הכנסת מדברים?</h4>
-    <h4>קשה לעקוב אחרי כל מה שקורה?</h4>
-    <h4>כל ההודעות במקום אחד!</h4>
-    <h4>ברוכים הבאים ל</h4>
-    <img style=" padding:0; margin:0; width:210px; height:60px; border-radius: 0%;" src="https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png">
-    <h4>הכנסצ'אט הוא צ'אט של חברי הכנסת בו תוכלו לקרוא את כל ההודעות שלהם במקום אחד</h4>
 
-"""
 st.markdown( # fixed width to sidebar
     """
     <style>
