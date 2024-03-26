@@ -69,7 +69,6 @@ st.markdown( # fixed width to sidebar
 
 with st.sidebar:
     st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)")
-    st.write("נבנה על ידי אמיר גבאי")
 
 
 st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png") #Banner
