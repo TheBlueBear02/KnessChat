@@ -2,6 +2,8 @@ import streamlit as st
 import datetime
 import json
 
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true')
+                
 def display_user_message(tweet,all_tweets):
     # Define styles for user1
     id = tweet["UserId"]
@@ -10,24 +12,23 @@ def display_user_message(tweet,all_tweets):
     if profile["additional_role"] != "":
         hasRole = "|"
 
+    text_color = "black"
+    border_radius = "15px"
+    
     if profile["is_coalition"] == True: # Define styles for coalition or other users
         alignment = "flex-end"
         background_color = "#DEEFFF"
-        text_color = "black"
-        border_radius = "15px"
         halign = "right"
         talign = "left"
         table = "ltr"
     else:  # Define styles for oposition or other users
         alignment = "flex-start"
-        background_color = "#FFF8F8"
-        text_color = "black"
-        border_radius = "15px"
+        background_color = "#FFF8F8"      
         halign = "left"
         talign = "right"
         table = "rtl"
 
-
+    
     # Custom styling for the message bubble
     bubble = f"""
     <div style="display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
@@ -61,6 +62,17 @@ st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Image
 #st.markdown("### KnessChat")
 #st.markdown("---")
 
-# Display the messages
-for tweet in all_tweets["Tweets"]:
-    display_user_message(tweet,all_tweets)
+st.markdown("""
+    <style>
+    /* Target all Streamlit containers */
+    .stContainer {
+        background-color: #f0f2f6; /* Light gray background */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+with st.container(border=0,height=600):
+        # Display the messages
+        for tweet in all_tweets["Tweets"]:
+            display_user_message(tweet,all_tweets)
