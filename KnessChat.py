@@ -1,15 +1,14 @@
 import streamlit as st
-import datetime
 import json
+from streamlit_extras.badges import badge
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true')
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true') # site config
                 
-def display_user_message(tweet,all_tweets):
-    # Define styles for user1
+def display_user_message(tweet,all_tweets): # print the latest tweets
     id = tweet["UserId"]
-    profile = next((p for p in all_tweets["Members"] if p["Id"] == id), None)
+    profile = next((p for p in all_tweets["Members"] if p["Id"] == id), None) # search for the specific user
     hasRole = ""
-    if profile["additional_role"] != "":
+    if profile["additional_role"] != "": # checks if the user has additional role
         hasRole = "|"
 
     text_color = "black"
@@ -23,7 +22,7 @@ def display_user_message(tweet,all_tweets):
         table = "ltr"
     else:  # Define styles for oposition or other users
         alignment = "flex-start"
-        background_color = "#FFF8F8"      
+        background_color = "#FFF5EC"      
         halign = "left"
         talign = "right"
         table = "rtl"
@@ -34,7 +33,7 @@ def display_user_message(tweet,all_tweets):
     <div style="display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
         <div style="max-width: 80%; margin: 5px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
             <table style="direction: {table};">
-                <tr style="border: none;"> 
+                <tr style="padding:0px; margin:0px; border: none;"> 
                     <th style="border: none; text-align: {halign};">
                         <h5 style="margin:0; margin-left: 40px; padding: 0;">{profile["name"]}</h5>
                         <i style="margin-left: 0px;">{profile["additional_role"]} {hasRole} {profile["party"]}</i>
@@ -43,36 +42,29 @@ def display_user_message(tweet,all_tweets):
                         <img style=" padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
                     </th>
                 </tr>
-                <tr style="border: none;">
+                <tr style="padding:0px; margin:0px; border: none;">
                     <td style="border: none;">
                     <p dir= "rtl" style="color: {text_color}; margin:0px; padding:0px;">{tweet["Text"]}</p>
                     <p style="color: {text_color}; text-align: {talign}; font-size: small; margin:0px; padding:0px;">{tweet["Time"]}</p></td>
                     <td style="border: none;"></td>
     </div>
     """
-    st.markdown(bubble, unsafe_allow_html=True)
+    st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
 
 # Reads the tweets json file
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 
 
-st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png")
-# Display the chat interface
-#st.markdown("### KnessChat")
-#st.markdown("---")
+st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png") #Banner
 
-st.markdown("""
-    <style>
-    /* Target all Streamlit containers */
-    .stContainer {
-        background-color: #f0f2f6; /* Light gray background */
-    }
-    </style>
-""", unsafe_allow_html=True)
+#badge(type="twitter", name="KnessChat") #follow on twitter button
 
+feed = st.container(border=0,height=500)
 
-with st.container(border=0,height=600):
-        # Display the messages
-        for tweet in all_tweets["Tweets"]:
+with feed: # Tweets containter
+        for tweet in all_tweets["Tweets"]:         # Display the messages
             display_user_message(tweet,all_tweets)
+
+
+
