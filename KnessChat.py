@@ -1,7 +1,8 @@
 import streamlit as st
 import json
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true') # site config
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='collapsed'
+) # site config
                 
 def display_user_message(tweet,all_tweets): # print the latest tweets
     id = tweet["UserId"]
@@ -49,10 +50,34 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
     </div>
     """
     st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
-
 # Reads the tweets json file
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
+
+welcomeT = f"""
+    <div dir= "rtl" style="display: flex; flex-direction: column; align-items: right; margin-top: 4px;">
+    <h4>על מה חברי הכנסת מדברים?</h4>
+    <h4>קשה לעקוב אחרי כל מה שקורה?</h4>
+    <h4>כל ההודעות במקום אחד!</h4>
+    <h4>ברוכים הבאים ל</h4>
+    <img style=" padding:0; margin:0; width:210px; height:60px; border-radius: 0%;" src="https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png">
+    <h4>הכנסצ'אט הוא צ'אט של חברי הכנסת בו תוכלו לקרוא את כל ההודעות שלהם במקום אחד</h4>
+
+"""
+st.markdown( # fixed width to sidebar
+    """
+    <style>
+        section[data-testid="stSidebar"] {
+            width: 255px !important; # Set the width to your desired value
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+with st.sidebar:
+    st.markdown("[![Foo](http://www.google.com.au/images/nav_logo7.png)](http://google.com.au/)")
+
 
 
 st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png") #Banner
@@ -60,7 +85,7 @@ st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Image
 feed = st.container(border=0,height=500)
 
 with feed: # Tweets containter
-        for tweet in all_tweets["Tweets"]:         # Display the messages
+        for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
             display_user_message(tweet,all_tweets)
 
 
