@@ -44,7 +44,7 @@ def display_user_message(tweet,all_tweets):
                 </tr>
                 <tr style="border: none;">
                     <td style="border: none;">
-                    <p dir= "rtl" style="margin-top: 10px; color: {text_color}; margin:0px; padding:0px;">{tweet["Text"]}</p>
+                    <p dir= "rtl" style="color: {text_color}; margin:0px; padding:0px;">{tweet["Text"]}</p>
                     <p style="color: {text_color}; text-align: {talign}; font-size: small; margin:0px; padding:0px;">{tweet["Time"]}</p></td>
                     <td style="border: none;"></td>
     </div>
