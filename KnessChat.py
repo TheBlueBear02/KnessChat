@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?') # site config
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true') # site config
                 
 def display_user_message(tweet,all_tweets): # print the latest tweets
     id = tweet["UserId"]
