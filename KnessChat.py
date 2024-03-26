@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='collapsed'
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto'
 ) # site config
                 
 def display_user_message(tweet,all_tweets): # print the latest tweets
@@ -78,7 +78,7 @@ st.markdown( # fixed width to sidebar
 
 with st.sidebar:
     st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)")
-
+    st.write("נבנה על ידי אמיר גבאי")
 
 
 st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png") #Banner
