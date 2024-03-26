@@ -77,7 +77,7 @@ st.markdown( # fixed width to sidebar
 
 
 with st.sidebar:
-    st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](http://google.com.au/)")
+    st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)")
 
 
 
