@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from streamlit_extras.badges import badge
+#from streamlit_extras.badges import badge
 
 st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true') # site config
                 
