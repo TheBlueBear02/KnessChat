@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from datetime import date
 
 st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto'
 ) # site config
@@ -13,7 +14,7 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
 
     text_color = "black"
     border_radius = "15px"
-    
+
     if profile["is_coalition"] == True: # Define styles for coalition or other users
         alignment = "flex-end"
         background_color = "#DEEFFF"
@@ -49,6 +50,7 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
                     <td style="border: none;"></td>
     </div>
     """
+       
     st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
 # Reads the tweets json file
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
@@ -66,18 +68,30 @@ st.markdown( # fixed width to sidebar
     unsafe_allow_html=True,
 )
 
-
 with st.sidebar: # side bar
     st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)") # sidebar banner
 
 
 st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner1.png") #Banner
 
+
 feed = st.container(border=0,height=500)
+today = date.today()
+today_tweets = [{
+            "Id" : "",
+            "UserId": "1",
+            "Text": "",
+            "Date": "",
+            "Time" : ""
+        }]
+
 
 with feed: # Tweets containter
         for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
-            display_user_message(tweet,all_tweets)
+            if tweet["Date"] == str(today):
+                display_user_message(tweet,all_tweets)
+            else:
+                break
 
 
 
