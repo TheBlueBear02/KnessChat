@@ -35,7 +35,7 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
         <div style="max-width: 80%; margin: 5px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
             <table style="direction: {table};">
                 <tr style="padding:0px; margin:0px; border: none;"> 
-                    <th style="border: none; text-align: {halign};">
+                    <th style="margin: 0;border: none; text-align: {halign};">
                         <h6 style="margin:0; margin-left: 40px; padding: 0;">{profile["name"]}</h6>
                         <i style="margin: 0px;padding:0px;">{profile["additional_role"]} {hasRole} {profile["party"]}</i>
                     </th>
@@ -44,10 +44,12 @@ def display_user_message(tweet,all_tweets): # print the latest tweets
                     </th>
                 </tr>
                 <tr style="padding:0px; margin:0px; border: none;">
-                    <td style="border: none;">
+                    <td style="margin: 0;padding:0; padding-right: 10px;border: none;">
                     <p dir= "rtl" style="color: {text_color}; margin:0px; padding:0px;">{tweet["Text"]}</p>
                     <p style="color: {text_color}; text-align: {talign}; font-size: small; margin:0px; padding:0px;">{tweet["Time"]}</p></td>
-                    <td style="border: none;"></td>
+                    <td style="margin: 0;padding:0;border: none;"></td>
+                </tr>
+        </div>
     </div>
     """
        
