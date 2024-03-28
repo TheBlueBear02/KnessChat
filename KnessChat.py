@@ -79,21 +79,14 @@ st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Image
 
 feed = st.container(border=0,height=500)
 today = date.today()
-today_tweets = [{
-            "Id" : "",
-            "UserId": "1",
-            "Text": "",
-            "Date": "",
-            "Time" : ""
-        }]
+
 
 
 with feed: # Tweets containter
         for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
-            if tweet["Date"] == str(today):
-                display_user_message(tweet,all_tweets)
-            else:
-                break
+            #if tweet["Date"] == str(today):
+            display_user_message(tweet,all_tweets)
+       
 
 
 
