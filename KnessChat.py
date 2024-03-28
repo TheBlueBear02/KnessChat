@@ -87,6 +87,6 @@ with feed: # Tweets containter
             #if tweet["Date"] == str(today):
             display_user_message(tweet,all_tweets)
        
-
-
+st.container(height=20,border=0)
+st.link_button(label="לתרומה",help="האתר לא מעודכן כרגע. על מנת שהאתר יעבוד 24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
 
