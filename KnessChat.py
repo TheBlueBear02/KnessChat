@@ -1,7 +1,6 @@
 import streamlit as st
 import json
 from datetime import date
-from streamlit_extras.stylable_container import stylable_container
 
 st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto'
 ) # site config
