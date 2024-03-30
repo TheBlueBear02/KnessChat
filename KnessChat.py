@@ -7,8 +7,6 @@ from user_agents import parse
 st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto'
 ) # site config
 
-with open( "style.css" ) as css:
-    st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
 
 # remove the top margin
@@ -69,82 +67,38 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
         talign = "right"
         table = "rtl"
     
-        
-   
-
-    if len(text) > 250: # Checks if the message is too long and divide it 
      
-        # Splitting string into equal halves 
-        res_first = text[0:len(text)//2] 
-        res_second = text[len(text)//2 if len(text)%2 == 0
-                                        else ((len(text)//2)+1):] 
-        # Custom styling for the message bubble
-        bubble = f"""
-        
-        <div id = "bubble"; style="margin-left:{margin_left}; width: {container_width}; display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
-            <div style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); max-width: {bubble_width}; margin: 10px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
-                <table style="direction: {table};">
-                    <tr style="padding:0px; margin:0px; border: none;"> 
-                        <th style="margin: 0;border: none; text-align: {halign};">
-                            <h6 style="margin:0; margin-left: 50px; padding: 0;">{profile["name"]}</h6>
-                            <i style="margin: 0px;padding:0px;">{profile["additional_role"]} {hasRole} {profile["party"]}</i>
-                        </th>
-                        <th style="border: none;float: right;margin:0; padding: 0;">
-                            <img style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.5); padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
-                        </th>
-                    </tr>
-                    <tr style="padding:0px; margin:0px; border: none;">
-                        <td style="margin: 0;padding:0; padding-right: 10px;border: none;">
-                        <p dir= "rtl" style="line-height:120%; font-size:17px;color: {text_color}; margin:0px; padding:0px;">{res_first}<span id="dots">...</span></p>
-                        <button style="font-size: 16px;float:right;margin:0px;margin-bottom:10px; padding:0px;border:none;background-color:{background_color};color:blue;" onclick="myFunction()" id="myBtn">הצג עוד</button>
-                        </td>
-                        <td style="margin: 0;padding:0;border: none;"></td>
-                    </tr>
-                    <tr style="margin: 0;padding:0;border: none;">
-                        <th style="margin: 0;padding:0;border: none;">                     
-                        <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
-                        </object>
-                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
-                        </th>
-                    </tr>
-            </div>
-        </div>
-        """
-        
-        st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble 
-    else: # short tweet bubble
-        # Custom styling for the message bubble
-        bubble = f"""
+    bubble = f"""
 
-        <div style=" margin-left: {margin_left}; width: {container_width};display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
-            <div style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); max-width: {bubble_width}; margin: 10px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
-                <table style="direction: {table};">
-                    <tr style="padding:0px; margin:0px; border: none;"> 
-                        <th style="margin: 0;border: none; text-align: {halign};">
-                            <h6 style="margin:0; margin-left: 50px; padding: 0;">{profile["name"]}</h6>
-                            <i style="margin: 0px;padding:0px;">{profile["additional_role"]} {hasRole} {profile["party"]}</i>
-                        </th>
-                        <th style="border: none;float: right;margin:0; padding: 0;">
-                            <img style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
-                        </th>
-                    </tr>
-                    <tr style="padding:0px; margin:0px; border: none;">
-                        <td style="margin: 0;padding:0; padding-right: 10px;border: none;">
-                        <p dir= "rtl" style="line-height:120%;font-size:17px;color: {text_color}; margin-down:5px; padding:0px;">{tweet["Text"]}</p>
-                        </td>
-                        <td style="margin: 0;padding:0;border: none;"></td>
-                    </tr>
-                    <tr style="margin: 0;padding:0;border: none;">
-                        <th style="margin: 0;padding:0;border: none;">                     
-                        <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
-                        </object>
-                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
-                        </th>
-                    </tr>
-            </div>
+    <div style=" margin-left: {margin_left}; width: {container_width};display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
+        <div style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); max-width: {bubble_width}; margin: 10px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
+            <table style="direction: {table};">
+                <tr style="padding:0px; margin:0px; border: none;"> 
+                    <th style="margin: 0;border: none; text-align: {halign};">
+                        <h6 style="margin:0; margin-left: 50px; padding: 0;">{profile["name"]}</h6>
+                        <i style="margin: 0px;padding:0px;">{profile["additional_role"]} {hasRole} {profile["party"]}</i>
+                    </th>
+                    <th style="border: none;float: right;margin:0; padding: 0;">
+                        <img style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
+                    </th>
+                </tr>
+                <tr style="padding:0px; margin:0px; border: none;">
+                    <td style="margin: 0;padding:0; padding-right: 10px;border: none;">
+                    <p dir= "rtl" style="line-height:120%;font-size:17px;color: {text_color}; margin-down:5px; padding:0px;">{tweet["Text"]}</p>
+                    </td>
+                    <td style="margin: 0;padding:0;border: none;"></td>
+                </tr>
+                <tr style="margin: 0;padding:0;border: none;">
+                    <th style="margin: 0;padding:0;border: none;">                     
+                    <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
+                    </object>
+                    <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
+                    </th>
+                </tr>
         </div>
-        """
-        st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
+    </div>
+    """
+    st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
 
 
 # Reads the tweets json file
