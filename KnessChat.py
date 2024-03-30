@@ -119,6 +119,7 @@ st.markdown( # fixed width to sidebar
 
 with st.sidebar: # side bar
     st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)") # sidebar banner
+    st.link_button(label="לתרומה",help="24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
 
 feed = st.container()
 
@@ -140,4 +141,3 @@ with feed:
         show_feed(tweet,all_tweets,on_pc)
 
 #st.container(height=20,border=0)
-#st.link_button(label="לתרומה",help="האתר לא מעודכן כרגע. על מנת שהאתר יעבוד 24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
