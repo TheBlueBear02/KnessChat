@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from datetime import date
+from datetime import datetime, timedelta, date
 from streamlit_javascript import st_javascript
 from user_agents import parse 
 
@@ -31,13 +31,26 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
         hasRole = "|"
 
     
-    bubble_width = "70%"
+    day = datetime.strptime(tweet["Date"], '%Y-%m-%d').date() # gets the tweet date
+    yesterday = datetime.today() - timedelta(days=1) # yesterday's date
+
+    if day == date.today():
+        day = "היום"
+    elif day == yesterday.date():
+        day = "אתמול"
+    else:
+        day = datetime.strftime(day, '%d/%m/%y')
+    
+    
+    # pc deisgn
+    bubble_width = "70%"    
     container_width = "80%"
     margin_left = "15%"
     text_color = "black"
     border_radius = "25px"
     
-    if not on_pc:
+    if not on_pc: # checks if on pc or not
+        # phone design
         bubble_width = "100%"
         container_width = "100%"
         margin_left = "0%"
@@ -56,6 +69,9 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
         talign = "right"
         table = "rtl"
     
+        
+   
+
     if len(text) > 250: # Checks if the message is too long and divide it 
      
         # Splitting string into equal halves 
@@ -88,7 +104,7 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
                         <th style="margin: 0;padding:0;border: none;">                     
                         <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
                         </object>
-                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]}</p>
+                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
                         </th>
                     </tr>
             </div>
@@ -122,7 +138,7 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
                         <th style="margin: 0;padding:0;border: none;">                     
                         <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
                         </object>
-                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]}</p>
+                        <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
                         </th>
                     </tr>
             </div>
