@@ -31,16 +31,16 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
         hasRole = "|"
 
     
-    bubble_width = "100%"
-    container_width = "100%"
-    margin_left = "0%"
+    bubble_width = "70%"
+    container_width = "80%"
+    margin_left = "15%"
     text_color = "black"
     border_radius = "25px"
     
-    if on_pc:
-        bubble_width = "70%"
-        container_width = "80%"
-        margin_left = "15%"
+    if not on_pc:
+        bubble_width = "100%"
+        container_width = "100%"
+        margin_left = "0%"
 
     
     if profile["is_coalition"] == True: # Define styles for coalition or other users
