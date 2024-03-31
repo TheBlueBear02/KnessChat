@@ -135,8 +135,8 @@ with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
 
 
 with feed:
-    #banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
-    st.markdown("[![Foo](https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png)](https://knesschat.streamlit.app/)")
+    banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+ 
     for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
         #if tweet["Date"] == str(today):
         show_feed(tweet,all_tweets,knesset_members,on_pc)
