@@ -14,10 +14,8 @@ st.markdown(" <style> div[class^='block-container'] { padding-top: 0rem; } </sty
 st.markdown(" <style> div[class^='st-emotion-cache-16txtl3 eczjsme4'] { padding-top: 3rem; } </style> ", unsafe_allow_html=True)
 
  
-
 BACKGROUND_COLOR = 'white'
 COLOR = 'black'
-
 
 def show_feed(tweet,all_tweets,knesset_members,on_pc): # print the latest tweets
     
@@ -84,7 +82,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc): # print the latest tweets
                 </tr>
                 <tr style="padding:0px; margin:0px; border: none;">
                     <td style="margin: 0;padding:0; padding-right: 10px;border: none;">
-                    <p dir= "rtl" style="line-height:120%;font-size:17px;color: {text_color}; margin-down:5px; padding:0px;">{tweet["Text"]}</p>
+                    <p dir= "rtl" style="line-height:120%;font-size:17px;color: {text_color}; margin-down:5px; padding:0px;">{text}</p>
                     </td>
                     <td style="margin: 0;padding:0;border: none;"></td>
                 </tr>
@@ -137,7 +135,8 @@ with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
 
 
 with feed:
-    banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+    #banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+    st.markdown("[![Foo](https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png)](https://knesschat.streamlit.app/)")
     for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
         #if tweet["Date"] == str(today):
         show_feed(tweet,all_tweets,knesset_members,on_pc)
