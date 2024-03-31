@@ -19,10 +19,10 @@ BACKGROUND_COLOR = 'white'
 COLOR = 'black'
 
 
-def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
+def show_feed(tweet,all_tweets,knesset_members,on_pc): # print the latest tweets
     
     id = tweet["UserId"]
-    profile = next((p for p in all_tweets["Members"] if p["Id"] == id), None) # search for the specific user
+    profile = next((p for p in knesset_members["Members"] if p["Id"] == id), None) # search for the specific user
     hasRole = ""
     text = tweet["Text"]
     if profile["additional_role"] != "": # checks if the user has additional role
@@ -101,10 +101,6 @@ def show_feed(tweet,all_tweets,on_pc): # print the latest tweets
     st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
 
 
-# Reads the tweets json file
-with open('Tweets.json', 'r',  encoding='utf-8') as file:
-    all_tweets = json.load(file)
-
 
 st.markdown( # fixed width to sidebar
     """
@@ -123,7 +119,7 @@ with st.sidebar: # side bar
 
 feed = st.container()
 
-ua_string = st_javascript("""window.navigator.userAgent;""")
+ua_string = st_javascript("""window.navigator.userAgent;""") # checks if the user is from phone or pc
 user_agent = parse(str(ua_string))
 st.session_state.is_session_pc = user_agent.is_pc
 on_pc = st.session_state.is_session_pc  
@@ -133,11 +129,16 @@ on_pc = st.session_state.is_session_pc
 
 #feed = st.container(border=0,height=600)
 today = date.today()
+# Reads the tweets json file
+with open('Tweets.json', 'r',  encoding='utf-8') as file:
+    all_tweets = json.load(file)
+with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
+    knesset_members = json.load(file)
+
 
 with feed:
     banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
     for tweet in reversed(all_tweets["Tweets"]):         # Display the messages
         #if tweet["Date"] == str(today):
-        show_feed(tweet,all_tweets,on_pc)
+        show_feed(tweet,all_tweets,knesset_members,on_pc)
 
-#st.container(height=20,border=0)
