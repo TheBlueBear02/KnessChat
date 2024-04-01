@@ -42,7 +42,6 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
             day = "אתמול"
         else:
             day = datetime.strftime(day, '%d/%m/%y')
-        topics_str = ""
         topic = tweet['Topic']
 
         # pc deisgn
@@ -72,9 +71,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
             talign = "right"
             table = "rtl"
         
-        
         bubble = f"""
-
         <div style=" margin-left: {margin_left}; width: {container_width};display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
             <div style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); max-width: {bubble_width}; margin: 10px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
                 <table style="direction: {table};">
@@ -106,8 +103,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
                     </tr>
                     <tr style="margin: 0;padding:0;border: none;">
                         <th style="margin: 0;padding:0;border: none;">                     
-                        <object style="border-radius:{border_radius}; width:100%;" data="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" type="image/jpeg">
-                        </object>
+                        <img style="border-radius:{border_radius}; width:100%;" src="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" alt=""/>
                         <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
                         </th>
                     </tr>
@@ -115,7 +111,6 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
         </div>
         """
         st.markdown(bubble, unsafe_allow_html=True) # print the tweet bubble
-
 
 
 st.markdown( # fixed width to sidebar
@@ -165,10 +160,10 @@ with feed:
     with col3:
         topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
     with col4:
-        reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True) # re
+        reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
         
     if reloadB:
-        chosen_topic = Topics.all_topics.value
+        reload()        
     if topic1:
         chosen_topic = Topics.topic1.value
     if topic2:
