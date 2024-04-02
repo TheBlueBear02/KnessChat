@@ -8,7 +8,7 @@ from user_agents import parse
 from enum import Enum
 import time
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto') # site config
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='collapsed') # site config
 
 
 float_init() # from float library
