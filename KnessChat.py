@@ -24,9 +24,6 @@ st.markdown(" <style> div[class^='block-container'] { padding-top: 0rem; } </sty
 st.markdown(" <style> div[class^='st-emotion-cache-16txtl3 eczjsme4'] { padding-top: 3rem; } </style> ", unsafe_allow_html=True)
 
 
-BACKGROUND_COLOR = 'white'
-COLOR = 'black'
-
 
 def reload(): # reload the code
     st.rerun()
@@ -68,12 +65,15 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
         container_width = "80%"
         margin_left = "10%"
         text_color = "black"
-        border_radius = "25px"
+        border_radius = "25px 5px 25px 25px"
+        padding = "0px"
         
         if not on_pc: # checks if on pc or not
             # phone design
             bubble_width = "100%"
             container_width = "100%"
+            margin_left = "0%"
+            padding = "15px"
             margin_left = "0%"
 
         
@@ -89,9 +89,10 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
             halign = "left"
             talign = "right"
             table = "rtl"
+            border_radius = "5px 25px 25px 25px"
         
         bubble = f"""
-        <div style=" margin-left: {margin_left}; width: {container_width};display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
+        <div style="padding-{talign}:{padding}; margin-left: {margin_left}; width: {container_width};display: flex; flex-direction: column; align-items: {alignment}; margin-top: 4px;">
             <div style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); max-width: {bubble_width}; margin: 10px; padding: 10px; background-color: {background_color}; border-radius: {border_radius}; color: {text_color}; text-align: right">
                 <table style="direction: {table};">
                     <tr style="direction: {table}; padding:0px; margin:0px; border: none;"> 
@@ -122,7 +123,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
                     </tr>
                     <tr style="margin: 0;padding:0;border: none;">
                         <th style="margin: 0;padding:0;border: none;">                     
-                        <img style="border-radius:{border_radius}; width:100%;" src="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" alt=""/>
+                        <img style="margin-bottom:5px;border-radius:{border_radius}; width:100%;" src="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" alt=""/>
                         <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
                         </th>
                     </tr>
@@ -147,7 +148,6 @@ with st.sidebar: # side bar
     st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)") # sidebar banner
     st.link_button(label="לתרומה",help="24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
 
-feed = st.container()
 
 # checks if the user is from phone or pc
 ua_string = st_javascript("""window.navigator.userAgent;""") 
@@ -156,7 +156,7 @@ st.session_state.is_session_pc = user_agent.is_pc
 on_pc = st.session_state.is_session_pc  
 
 
-# Reads the tweets json file
+# Reads the tweets and knesset members json files
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
@@ -164,53 +164,12 @@ with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
 
 
 chosen_topic = Topics.all_topics.value # set the defualt topic to all topics
+feed = st.container() # tweets feed container
+unique_id = int(time.time()) # Get the current time to create unique id for the scroll up function
+Header = st.container() # the header container
 
-
-unique_id = int(time.time())
-
-# Container with expand/collapse button
-button_container = st.container()
-if not on_pc:
-    with button_container:
-        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
-        with st.expander(label="בחר נושא"):
-            col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
-            with col1:
-                topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
-            with col2:
-                topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
-            with col3:
-                topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
-            with col4:
-                reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
-                
-            if reloadB:
-                chosen_topic = Topics.all_topics.value
-                scroll_to_top(unique_id)
-
-            if topic1:
-                chosen_topic = Topics.topic1.value
-                scroll_to_top(unique_id)
-
-            if topic2:
-                chosen_topic = Topics.topic2.value
-                scroll_to_top(unique_id)
-            if topic3:
-                chosen_topic = Topics.topic3.value
-                scroll_to_top(unique_id)
-
-    with feed:
-        top = st.container(height=150,border=0)          
-
-        for tweet in reversed(all_tweets):         # Display the messages
-            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
-
-
-    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
-    button_container.float(button_css)
-
-else:
-    with button_container:
+if on_pc: # pc layout
+    with Header:
         banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
         col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
         with col1:
@@ -238,11 +197,51 @@ else:
             scroll_to_top(unique_id)
 
     with feed:
-        top = st.container(height=150,border=0)          
+        top = st.container(height=130,border=0)          
 
         for tweet in reversed(all_tweets):         # Display the messages
             show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
 
-    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
-    button_container.float(button_css)
+    header_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    Header.float(header_css)
+
+else: # Phone layout
+    with Header:
+        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+        
+        with st.expander(label="סנן על פי נושא"):
+            # topics filter buttons table
+            col1, col2, col3, col4 = st.columns([1,1,1,1])  
+            with col4:
+                reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
+            with col3:
+                topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
+            with col2:
+                topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
+            with col1:
+                topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
+            
+            # if topic chosen    
+            if reloadB:
+                chosen_topic = Topics.all_topics.value
+                scroll_to_top(unique_id)
+            if topic1:
+                chosen_topic = Topics.topic1.value
+                scroll_to_top(unique_id)
+            if topic2:
+                chosen_topic = Topics.topic2.value
+                scroll_to_top(unique_id)
+            if topic3:
+                chosen_topic = Topics.topic3.value
+                scroll_to_top(unique_id)
+
+    with feed:
+        top = st.container(height=70,border=0)          
+
+        for tweet in reversed(all_tweets):   # Display the tweets
+            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
+
+
+    header_css = float_css_helper(top= "1rem",background="white",css="padding:0px; margin:0px; padding-top:50px;padding-bottom:10px;border-radius:0px") 
+    Header.float(header_css) # set the popup header
