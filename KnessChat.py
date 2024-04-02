@@ -170,45 +170,7 @@ unique_id = int(time.time())
 
 # Container with expand/collapse button
 button_container = st.container()
-if on_pc:
-    with button_container:
-        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
-        col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
-        with col1:
-            topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
-        with col2:
-            topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
-        with col3:
-            topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
-        with col4:
-            reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
-            
-        if reloadB:
-            chosen_topic = Topics.all_topics.value
-            scroll_to_top(unique_id)
-
-        if topic1:
-            chosen_topic = Topics.topic1.value
-            scroll_to_top(unique_id)
-
-        if topic2:
-            chosen_topic = Topics.topic2.value
-            scroll_to_top(unique_id)
-        if topic3:
-            chosen_topic = Topics.topic3.value
-            scroll_to_top(unique_id)
-
-    with feed:
-        top = st.container(height=150,border=0)          
-
-        for tweet in reversed(all_tweets):         # Display the messages
-            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
-
-
-    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
-    button_container.float(button_css)
-
-else:
+if not on_pc:
     with button_container:
         banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
         with st.expander(label="בחר נושא"):
@@ -236,6 +198,44 @@ else:
             if topic3:
                 chosen_topic = Topics.topic3.value
                 scroll_to_top(unique_id)
+
+    with feed:
+        top = st.container(height=150,border=0)          
+
+        for tweet in reversed(all_tweets):         # Display the messages
+            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
+
+
+    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    button_container.float(button_css)
+
+else:
+    with button_container:
+        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+        col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
+        with col1:
+            topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
+        with col2:
+            topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
+        with col3:
+            topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
+        with col4:
+            reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
+            
+        if reloadB:
+            chosen_topic = Topics.all_topics.value
+            scroll_to_top(unique_id)
+
+        if topic1:
+            chosen_topic = Topics.topic1.value
+            scroll_to_top(unique_id)
+
+        if topic2:
+            chosen_topic = Topics.topic2.value
+            scroll_to_top(unique_id)
+        if topic3:
+            chosen_topic = Topics.topic3.value
+            scroll_to_top(unique_id)
 
     with feed:
         top = st.container(height=150,border=0)          
