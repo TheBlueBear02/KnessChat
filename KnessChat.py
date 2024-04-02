@@ -10,6 +10,7 @@ import time
 
 st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto') # site config
 
+
 float_init() # from float library
 
 
@@ -35,6 +36,7 @@ def scroll_to_top(unique_id): # scroll the page to the top using javascript
         var body = window.parent.document.querySelector(".main");
         body.scrollTop = 0;
     </script>
+
     '''
     st.components.v1.html(js)
 
@@ -85,7 +87,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
             table = "ltr"
         else:  # Define styles for oposition or other users
             alignment = "flex-start"
-            background_color = "#FFF5EC"      
+            background_color = "#FFEEDF"      
             halign = "left"
             talign = "right"
             table = "rtl"
@@ -105,7 +107,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
                                         </div>                              
                                     </th>
                                     <th style="border: none; margin:0; padding: 0;">
-                                        <h5 style="margin:0; margin-left: 50px; padding: 0;">{profile["name"]}</h6>
+                                        <h5 style="margin:0; margin-left: 50px; padding: 0;">{profile["name"]}</h5>
                                     </th>
                                 </tr>
                             </table>
@@ -166,11 +168,12 @@ with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
 chosen_topic = Topics.all_topics.value # set the defualt topic to all topics
 feed = st.container() # tweets feed container
 unique_id = int(time.time()) # Get the current time to create unique id for the scroll up function
-Header = st.container() # the header container
+header = st.container() # the header container
+footer = st.container() # the header container
 
 if on_pc: # pc layout
-    with Header:
-        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+    with header:
+        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner3.png") #Banner
         col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
         with col1:
             topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
@@ -203,13 +206,11 @@ if on_pc: # pc layout
             show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
 
-    header_css = float_css_helper(top= "0.5rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
-    Header.float(header_css)
+    header_css = float_css_helper(top= "0.1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    header.float(header_css)
 
 else: # Phone layout
-    with Header:
-        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
-        
+    with footer:
         with st.expander(label="סנן על פי נושא"):
             # topics filter buttons table
             col1, col2, col3, col4 = st.columns([1,1,1,1])  
@@ -236,12 +237,14 @@ else: # Phone layout
                 chosen_topic = Topics.topic3.value
                 scroll_to_top(unique_id)
 
+    footer_css = float_css_helper(bottom= "0.5rem",background="white",css="padding:0px; margin:0px; border-radius:0px") 
+    footer.float(footer_css) # set the popup header
     with feed:
-        top = st.container(height=70,border=0)          
-
+        with header:
+            banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner3.png") #Banner
         for tweet in reversed(all_tweets):   # Display the tweets
             show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
 
-    header_css = float_css_helper(top= "1rem",background="white",css="padding:0px; margin:0px; padding-top:50px;padding-bottom:10px;border-radius:0px") 
-    Header.float(header_css) # set the popup header
+    header_css = float_css_helper(top= "2.86rem",background="white",css="padding:0px; margin:0px; border-radius:0px") 
+    header.float(header_css) # set the popup header
