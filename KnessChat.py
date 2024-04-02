@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_float import *
+from streamlit_float import float_init
 import json
 from datetime import datetime, timedelta, date
 from streamlit_javascript import st_javascript
