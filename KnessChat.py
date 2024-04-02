@@ -197,13 +197,13 @@ if on_pc: # pc layout
             scroll_to_top(unique_id)
 
     with feed:
-        top = st.container(height=130,border=0)          
+        top = st.container(height=120,border=0)          
 
         for tweet in reversed(all_tweets):         # Display the messages
             show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
 
-    header_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    header_css = float_css_helper(top= "0.5rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
     Header.float(header_css)
 
 else: # Phone layout
