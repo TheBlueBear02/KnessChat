@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_float
 from streamlit_float import float_init
 import json
 from datetime import datetime, timedelta, date
