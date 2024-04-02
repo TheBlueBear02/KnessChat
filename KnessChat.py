@@ -1,15 +1,18 @@
 import streamlit as st
+from streamlit_float import *
 import json
 from datetime import datetime, timedelta, date
 from streamlit_javascript import st_javascript
 from user_agents import parse 
 from enum import Enum
+import time
+
+st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto') # site config
+
+float_init() # from float library
 
 
-st.set_page_config(page_title='KnessChat', page_icon='https://github.com/TheBlueBear02/KnessChat/blob/master/Images/Knesset.png?raw=true', initial_sidebar_state='auto'
-) # site config
-
-class Topics(Enum):
+class Topics(Enum): # topics enum
     topic1 = "חטופים"
     topic2 = "חוק הגיוס"
     topic3 = "מלחמה"
@@ -19,9 +22,24 @@ class Topics(Enum):
 st.markdown(" <style> div[class^='block-container'] { padding-top: 0rem; } </style> ", unsafe_allow_html=True)
 st.markdown(" <style> div[class^='st-emotion-cache-16txtl3 eczjsme4'] { padding-top: 3rem; } </style> ", unsafe_allow_html=True)
 
- 
+
 BACKGROUND_COLOR = 'white'
 COLOR = 'black'
+
+
+def reload(): # reload the code
+    st.rerun()
+
+def scroll_to_top(unique_id): # scroll the page to the top using javascript
+    js = f'''
+    <script>
+        {unique_id}
+        var body = window.parent.document.querySelector(".main");
+        body.scrollTop = 0;
+    </script>
+    '''
+    st.components.v1.html(js)
+
 
 def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the latest tweets
     if tweet["Topic"] == chosen_topic or chosen_topic == Topics.all_topics.value:
@@ -130,47 +148,100 @@ with st.sidebar: # side bar
 
 feed = st.container()
 
-ua_string = st_javascript("""window.navigator.userAgent;""") # checks if the user is from phone or pc
+# checks if the user is from phone or pc
+ua_string = st_javascript("""window.navigator.userAgent;""") 
 user_agent = parse(str(ua_string))
 st.session_state.is_session_pc = user_agent.is_pc
 on_pc = st.session_state.is_session_pc  
 
 
-
-#feed = st.container(border=0,height=600)
-today = date.today()
 # Reads the tweets json file
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
     all_tweets = json.load(file)
 with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
     knesset_members = json.load(file)
 
-def reload():
-    st.rerun()
 
-chosen_topic = Topics.all_topics.value
+chosen_topic = Topics.all_topics.value # set the defualt topic to all topics
 
-with feed:
-    banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
-    col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
-    with col1:
-        topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
-    with col2:
-        topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
-    with col3:
-        topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
-    with col4:
-        reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
-        
-    if reloadB:
-        reload()        
-    if topic1:
-        chosen_topic = Topics.topic1.value
-    if topic2:
-        chosen_topic = Topics.topic2.value
-    if topic3:
-        chosen_topic = Topics.topic3.value
-    
-    for tweet in reversed(all_tweets):         # Display the messages
-        show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
+unique_id = int(time.time())
+
+# Container with expand/collapse button
+button_container = st.container()
+if on_pc:
+    with button_container:
+        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+        col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
+        with col1:
+            topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
+        with col2:
+            topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
+        with col3:
+            topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
+        with col4:
+            reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
+            
+        if reloadB:
+            chosen_topic = Topics.all_topics.value
+            scroll_to_top(unique_id)
+
+        if topic1:
+            chosen_topic = Topics.topic1.value
+            scroll_to_top(unique_id)
+
+        if topic2:
+            chosen_topic = Topics.topic2.value
+            scroll_to_top(unique_id)
+        if topic3:
+            chosen_topic = Topics.topic3.value
+            scroll_to_top(unique_id)
+
+    with feed:
+        top = st.container(height=150,border=0)          
+
+        for tweet in reversed(all_tweets):         # Display the messages
+            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
+
+
+    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    button_container.float(button_css)
+
+else:
+    with button_container:
+        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner2.png") #Banner
+        with st.expander(label="בחר נושא"):
+            col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
+            with col1:
+                topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
+            with col2:
+                topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
+            with col3:
+                topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
+            with col4:
+                reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
+                
+            if reloadB:
+                chosen_topic = Topics.all_topics.value
+                scroll_to_top(unique_id)
+
+            if topic1:
+                chosen_topic = Topics.topic1.value
+                scroll_to_top(unique_id)
+
+            if topic2:
+                chosen_topic = Topics.topic2.value
+                scroll_to_top(unique_id)
+            if topic3:
+                chosen_topic = Topics.topic3.value
+                scroll_to_top(unique_id)
+
+    with feed:
+        top = st.container(height=150,border=0)          
+
+        for tweet in reversed(all_tweets):         # Display the messages
+            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
+
+
+    button_css = float_css_helper(top= "1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
+    button_container.float(button_css)
