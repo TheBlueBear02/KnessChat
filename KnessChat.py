@@ -222,3 +222,9 @@ for tweet in reversed(all_tweets):   # Display the tweets
     show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
 
 header.float(header_css) # set the popup header
+
+info = st.container()
+with info:
+    st.markdown("**לעוד מידע**")
+info_css = float_css_helper(left="2.5rem",top= "3rem",background="#0082FB",css="color:white;width:100px;padding:15px; margin:0px; border-radius:0px 50px 50px 50px") 
+info.float(info_css) # set the popup footer
