@@ -206,7 +206,7 @@ if on_pc: # pc header
         banner = st.image(banner_src) #Banner
         chosen_topic = topics_menu(chosen_topic)
        
-    top = st.container(height=110,border=0)          
+    top = st.container(height=80,border=0)          
     header_css = float_css_helper(top= "0rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
 
 else: # Phone header and footer
