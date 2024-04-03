@@ -181,6 +181,11 @@ user_agent = parse(str(ua_string))
 st.session_state.is_session_pc = user_agent.is_pc
 on_pc = st.session_state.is_session_pc  
 
+info = st.container()
+with info:
+    st.markdown("**לעוד מידע**")
+info_css = float_css_helper(left="2.5rem",top= "3rem",background="#0082FB",css="color:white;width:100px;padding:15px; margin:0px; border-radius:0px 50px 50px 50px") 
+info.float(info_css) # set the popup footer
 
 # Reads the tweets and knesset members json files
 with open('Tweets.json', 'r',  encoding='utf-8') as file:
@@ -223,8 +228,3 @@ for tweet in reversed(all_tweets):   # Display the tweets
 
 header.float(header_css) # set the popup header
 
-info = st.container()
-with info:
-    st.markdown("**לעוד מידע**")
-info_css = float_css_helper(left="2.5rem",top= "3rem",background="#0082FB",css="color:white;width:100px;padding:15px; margin:0px; border-radius:0px 50px 50px 50px") 
-info.float(info_css) # set the popup footer
