@@ -40,6 +40,30 @@ def scroll_to_top(unique_id): # scroll the page to the top using javascript
     '''
     st.components.v1.html(js)
 
+def topics_menu(chosen_topic): # print the topics buttons menu and return the selected topic
+    col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
+    with col1:
+        topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
+    with col2:
+        topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
+    with col3:
+        topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
+    with col4:
+        reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
+        
+    if reloadB:
+        chosen_topic = Topics.all_topics.value
+        scroll_to_top(unique_id)
+    elif topic1:
+        chosen_topic = Topics.topic1.value
+        scroll_to_top(unique_id)
+    elif topic2:
+        chosen_topic = Topics.topic2.value
+        scroll_to_top(unique_id)
+    elif topic3:
+        chosen_topic = Topics.topic3.value
+        scroll_to_top(unique_id)
+    return  chosen_topic
 
 def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the latest tweets
     if tweet["Topic"] == chosen_topic or chosen_topic == Topics.all_topics.value:
@@ -114,7 +138,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
                             <i style=" margin: 0px;padding:0px;">{profile["additional_role"]} {hasRole} {profile["party"]}
                         </th>
                         <th style="border: none;float: right;margin:0; padding: 0;">
-                            <img style="box-shadow: 0 2px 5px rgb(0 0 0 / 0.2); padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
+                            <img style="box-shadow: 0 3px 6px rgb(0 0 0 / 0.3); padding:0; margin:0; width:40px; height:40px; border-radius: 50%;" src="{profile["image"]}">
                         </th>
                     </tr>
                     <tr style="padding:0px; margin:0px; border: none;">
@@ -125,7 +149,7 @@ def show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic): # print the 
                     </tr>
                     <tr style="margin: 0;padding:0;border: none;">
                         <th style="margin: 0;padding:0;border: none;">                     
-                        <img style="margin-bottom:5px;border-radius:{border_radius}; width:100%;" src="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" alt=""/>
+                        <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="https://github.com/TheBlueBear02/KnessChat/blob/master/tweetsImages/{tweet["Id"]}.jpg?raw=true" alt=""/>
                         <p style="color: {text_color}; text-align: {talign}; font-size: 14px;margin:0; margin-{talign}:10px; padding:0px;">{tweet["Time"]} | {day}</p>
                         </th>
                     </tr>
@@ -139,7 +163,7 @@ st.markdown( # fixed width to sidebar
     """
     <style>
         section[data-testid="stSidebar"] {
-            width: 255px !important; # Set the width to your desired value
+            width: 300px !important; # Set the width to your desired value
         }
     </style>
     """,
@@ -147,8 +171,8 @@ st.markdown( # fixed width to sidebar
 )
 
 with st.sidebar: # side bar
-    st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/sideBanner.png?raw=true)](https://twitter.com/KnessChat)") # sidebar banner
-    st.link_button(label="לתרומה",help="24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
+    st.markdown("[![Foo](https://github.com/TheBlueBear02/KnessChat/blob/master/Images/SideBanner1.png?raw=true)](https://twitter.com/KnessChat)") # sidebar banner
+    #st.link_button(label="לתרומה",help="24/7 אני צריך לשלם 100$ בחודש לטוויטר. מוזמנים לעזור",url="https://www.paypal.com/donate/?hosted_button_id=2ANRW8V38KYZS",use_container_width=True)
 
 
 # checks if the user is from phone or pc
@@ -166,85 +190,35 @@ with open('KnessetMembers.json', 'r',  encoding='utf-8') as file:
 
 
 chosen_topic = Topics.all_topics.value # set the defualt topic to all topics
-feed = st.container() # tweets feed container
 unique_id = int(time.time()) # Get the current time to create unique id for the scroll up function
 header = st.container() # the header container
 footer = st.container() # the header container
 
-if on_pc: # pc layout
+banner_src = "https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner3.png"
+
+if on_pc: # pc header
     with header:
-        banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner3.png") #Banner
-        col1, col2, col3, col4 = st.columns([1.5,1.5,1.5,1])  # filter buttons table
-        with col1:
-            topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
-        with col2:
-            topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
-        with col3:
-            topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
-        with col4:
-            reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
-            
-        if reloadB:
-            chosen_topic = Topics.all_topics.value
-            scroll_to_top(unique_id)
+        banner = st.image(banner_src) #Banner
+        chosen_topic = topics_menu(chosen_topic)
+       
+    top = st.container(height=110,border=0)          
+    header_css = float_css_helper(top= "0rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
 
-        if topic1:
-            chosen_topic = Topics.topic1.value
-            scroll_to_top(unique_id)
-
-        if topic2:
-            chosen_topic = Topics.topic2.value
-            scroll_to_top(unique_id)
-        if topic3:
-            chosen_topic = Topics.topic3.value
-            scroll_to_top(unique_id)
-
-    with feed:
-        top = st.container(height=120,border=0)          
-
-        for tweet in reversed(all_tweets):         # Display the messages
-            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
-
-
-    header_css = float_css_helper(top= "0.1rem",background="white",css="padding-top:50px;padding-bottom:10px;border-radius:15px")
-    header.float(header_css)
-
-else: # Phone layout
+else: # Phone header and footer
     with footer:
         with st.expander(label="סנן על פי נושא"):
-            # topics filter buttons table
-            col1, col2, col3, col4 = st.columns([1,1,1,1])  
-            with col4:
-                reloadB = st.button(label="כל הציוצים",key=4,use_container_width=True,type="primary") # re
-            with col3:
-                topic1 = st.button(label="🎗 חטופים",key=3,use_container_width=True)
-            with col2:
-                topic2 = st.button(label="👮 חוק הגיוס‍️",key=2,use_container_width=True)
-            with col1:
-                topic3 = st.button(label="🪖 מלחמה" ,key=1,use_container_width=True)
-            
-            # if topic chosen    
-            if reloadB:
-                chosen_topic = Topics.all_topics.value
-                scroll_to_top(unique_id)
-            if topic1:
-                chosen_topic = Topics.topic1.value
-                scroll_to_top(unique_id)
-            if topic2:
-                chosen_topic = Topics.topic2.value
-                scroll_to_top(unique_id)
-            if topic3:
-                chosen_topic = Topics.topic3.value
-                scroll_to_top(unique_id)
+            chosen_topic = topics_menu(chosen_topic) # topics filter buttons table
 
     footer_css = float_css_helper(bottom= "0.5rem",background="white",css="padding:0px; margin:0px; border-radius:0px") 
-    footer.float(footer_css) # set the popup header
-    with feed:
-        with header:
-            banner = st.image("https://raw.githubusercontent.com/TheBlueBear02/KnessChat/master/Images/banner3.png") #Banner
-        for tweet in reversed(all_tweets):   # Display the tweets
-            show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
-
-
+    footer.float(footer_css) # set the popup footer
+    with header:
+        banner = st.image(banner_src) #Banner
+    
     header_css = float_css_helper(top= "2.86rem",background="white",css="padding:0px; margin:0px; border-radius:0px") 
-    header.float(header_css) # set the popup header
+
+
+# feed
+for tweet in reversed(all_tweets):   # Display the tweets
+    show_feed(tweet,all_tweets,knesset_members,on_pc,chosen_topic)
+
+header.float(header_css) # set the popup header
